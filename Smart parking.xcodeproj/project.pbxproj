@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF383E8D2738A39A00C0688E /* ParkingColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF383E8C2738A39A00C0688E /* ParkingColumn.swift */; };
+		EF7B3BAF27374BD700AFB90B /* ParkingLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BAE27374BD700AFB90B /* ParkingLot.swift */; };
+		EF7B3BB227374D1300AFB90B /* ParkingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */; };
 		EF9CEF35271F8A9C00A40BAA /* Smart_parkingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */; };
-		EF9CEF37271F8A9C00A40BAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEF36271F8A9C00A40BAA /* ContentView.swift */; };
+		EF9CEF37271F8A9C00A40BAA /* ParkingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEF36271F8A9C00A40BAA /* ParkingLayout.swift */; };
 		EF9CEF39271F8A9F00A40BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */; };
 		EF9CEF3C271F8A9F00A40BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF9CEF3B271F8A9F00A40BAA /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF383E8C2738A39A00C0688E /* ParkingColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingColumn.swift; sourceTree = "<group>"; };
+		EF7B3BAE27374BD700AFB90B /* ParkingLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLot.swift; sourceTree = "<group>"; };
+		EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSpot.swift; sourceTree = "<group>"; };
 		EF9CEF31271F8A9C00A40BAA /* Smart parking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart parking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smart_parkingApp.swift; sourceTree = "<group>"; };
-		EF9CEF36271F8A9C00A40BAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EF9CEF36271F8A9C00A40BAA /* ParkingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLayout.swift; sourceTree = "<group>"; };
 		EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF9CEF3B271F8A9F00A40BAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EF9CEF3D271F8A9F00A40BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,7 +59,10 @@
 			isa = PBXGroup;
 			children = (
 				EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */,
-				EF9CEF36271F8A9C00A40BAA /* ContentView.swift */,
+				EF9CEF36271F8A9C00A40BAA /* ParkingLayout.swift */,
+				EF7B3BAE27374BD700AFB90B /* ParkingLot.swift */,
+				EF383E8C2738A39A00C0688E /* ParkingColumn.swift */,
+				EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */,
 				EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */,
 				EF9CEF3D271F8A9F00A40BAA /* Info.plist */,
 				EF9CEF3A271F8A9F00A40BAA /* Preview Content */,
@@ -138,8 +147,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9CEF37271F8A9C00A40BAA /* ContentView.swift in Sources */,
+				EF7B3BAF27374BD700AFB90B /* ParkingLot.swift in Sources */,
+				EF9CEF37271F8A9C00A40BAA /* ParkingLayout.swift in Sources */,
+				EF7B3BB227374D1300AFB90B /* ParkingSpot.swift in Sources */,
 				EF9CEF35271F8A9C00A40BAA /* Smart_parkingApp.swift in Sources */,
+				EF383E8D2738A39A00C0688E /* ParkingColumn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

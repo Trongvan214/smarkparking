@@ -9,13 +9,9 @@ import SwiftUI
 
 
 struct ParkingLayout: View {
-    //    @state var spotCount = 48
-    //    @State var array = [["1": false,
-    //                         "2": false,"3": false,"4": false,"5": false,"6": false,"7": false,"8": false,"9": false,"10": false],
-    //                        ["1": false,"2": false,"3": false,"4": false,"5": false,"6": false,"7": false,"8": false,"9": false,],
-    //                        ["1": false,"2": false,"3": false,"4": false,"5": false,"6": false,"7": false,"8": false,"9": false,"10": false]]
     let dirtColor: Color = Color(#colorLiteral(red: 0.5921568627, green: 0.4705882353, blue: 0.2431372549, alpha: 1))
     let parkingColor: Color = Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1))
+    let sideCornerWidth = 7
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -23,8 +19,10 @@ struct ParkingLayout: View {
                 let parkSizeHeight = CGFloat(geometry.size.height)
                 HStack(spacing: 0){
                     HStack(spacing: 0){
-                        Rectangle().frame(width: parkSizeWidth * 0.05)
+                        Rectangle()
+                            .frame(width: parkSizeWidth * 0.1)
                             .foregroundColor(dirtColor)
+                            .border(width: CGFloat(sideCornerWidth), edges: [.trailing], color: .white)
                     }
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
@@ -32,6 +30,7 @@ struct ParkingLayout: View {
                                 .foregroundColor(dirtColor)
                                 .frame(width: parkSizeWidth*0.13)
                                 .cornerRadius(50, corners: [.topRight, .bottomRight])
+                                .offset(x: CGFloat(sideCornerWidth) * -1)
                             Spacer()
                             Capsule()
                                 .foregroundColor(dirtColor)
@@ -39,8 +38,9 @@ struct ParkingLayout: View {
                             Spacer()
                             Rectangle()
                                 .foregroundColor(dirtColor)
-                                .frame(width: parkSizeWidth*0.1)
+                                .frame(width: parkSizeWidth*0.13)
                                 .cornerRadius(50, corners: [.topLeft, .bottomLeft])
+                                .offset(x: CGFloat(sideCornerWidth))
                         }
                         .frame(height: parkSizeHeight * 0.10)
                         .background(parkingColor)
@@ -50,10 +50,13 @@ struct ParkingLayout: View {
                         .frame(height: parkSizeHeight * 0.9)
                         .background(parkingColor)
                     }
-                    .frame(width: parkSizeWidth * 0.9)
+                    .background(parkingColor)
+                    .frame(width: parkSizeWidth * 0.8)
+                    .zIndex(1)
                     HStack {
-                        Rectangle().frame(width: parkSizeWidth * 0.05)
+                        Rectangle().frame(width: parkSizeWidth * 0.1)
                             .foregroundColor(dirtColor)
+                            .border(width: CGFloat(sideCornerWidth), edges: [.leading], color: .white)
                     }
                 }
                 .frame(width: parkSizeWidth, height: parkSizeHeight)
@@ -72,10 +75,10 @@ extension View {
     }
 }
 struct EdgeBorder: Shape {
-
+    
     var width: CGFloat
     var edges: [Edge]
-
+    
     func path(in rect: CGRect) -> Path {
         var path = Path()
         for edge in edges {
@@ -85,21 +88,21 @@ struct EdgeBorder: Shape {
                 case .trailing: return rect.maxX - width
                 }
             }
-
+            
             var y: CGFloat {
                 switch edge {
                 case .top, .leading, .trailing: return rect.minY
                 case .bottom: return rect.maxY - width
                 }
             }
-
+            
             var w: CGFloat {
                 switch edge {
                 case .top, .bottom: return rect.width
                 case .leading, .trailing: return self.width
                 }
             }
-
+            
             var h: CGFloat {
                 switch edge {
                 case .top, .bottom: return self.width
@@ -113,10 +116,10 @@ struct EdgeBorder: Shape {
 }
 
 struct RoundedCorner: Shape {
-
+    
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-
+    
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
