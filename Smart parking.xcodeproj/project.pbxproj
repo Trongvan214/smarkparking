@@ -10,22 +10,26 @@
 		EF383E8D2738A39A00C0688E /* ParkingColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF383E8C2738A39A00C0688E /* ParkingColumn.swift */; };
 		EF7B3BAF27374BD700AFB90B /* ParkingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BAE27374BD700AFB90B /* ParkingLayout.swift */; };
 		EF7B3BB227374D1300AFB90B /* ParkingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */; };
+		EF8E4C0527407BAC00680FB4 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8E4C0427407BAC00680FB4 /* Setting.swift */; };
 		EF9CEF35271F8A9C00A40BAA /* Smart_parkingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */; };
 		EF9CEF37271F8A9C00A40BAA /* ParkingLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEF36271F8A9C00A40BAA /* ParkingLot.swift */; };
 		EF9CEF39271F8A9F00A40BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */; };
 		EF9CEF3C271F8A9F00A40BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF9CEF3B271F8A9F00A40BAA /* Preview Assets.xcassets */; };
+		EFD8E0E3273F19E800DB025B /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8E0E2273F19E800DB025B /* Legend.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EF383E8C2738A39A00C0688E /* ParkingColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingColumn.swift; sourceTree = "<group>"; };
 		EF7B3BAE27374BD700AFB90B /* ParkingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLayout.swift; sourceTree = "<group>"; };
 		EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingSpot.swift; sourceTree = "<group>"; };
+		EF8E4C0427407BAC00680FB4 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		EF9CEF31271F8A9C00A40BAA /* Smart parking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart parking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smart_parkingApp.swift; sourceTree = "<group>"; };
 		EF9CEF36271F8A9C00A40BAA /* ParkingLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLot.swift; sourceTree = "<group>"; };
 		EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF9CEF3B271F8A9F00A40BAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EF9CEF3D271F8A9F00A40BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFD8E0E2273F19E800DB025B /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				EF9CEF34271F8A9C00A40BAA /* Smart_parkingApp.swift */,
+				EF8E4C0427407BAC00680FB4 /* Setting.swift */,
 				EF9CEF36271F8A9C00A40BAA /* ParkingLot.swift */,
 				EF7B3BAE27374BD700AFB90B /* ParkingLayout.swift */,
+				EFD8E0E2273F19E800DB025B /* Legend.swift */,
 				EF383E8C2738A39A00C0688E /* ParkingColumn.swift */,
 				EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */,
 				EF9CEF38271F8A9F00A40BAA /* Assets.xcassets */,
@@ -151,6 +157,8 @@
 				EF9CEF37271F8A9C00A40BAA /* ParkingLot.swift in Sources */,
 				EF7B3BB227374D1300AFB90B /* ParkingSpot.swift in Sources */,
 				EF9CEF35271F8A9C00A40BAA /* Smart_parkingApp.swift in Sources */,
+				EF8E4C0527407BAC00680FB4 /* Setting.swift in Sources */,
+				EFD8E0E3273F19E800DB025B /* Legend.swift in Sources */,
 				EF383E8D2738A39A00C0688E /* ParkingColumn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct ParkingLot: View {
+struct ParkingLayout: View {
+    var globalColor = GlobalColor()
     @State var parkingSpots: [Int: [String: Bool]] = [
         1: ["-": false],
         2: ["-": true],
@@ -57,26 +58,41 @@ struct ParkingLot: View {
     }
     var body: some View {
         HStack {
-            let leftSpots = parkingSpots.filter{ $0.0 <= 10 }               //spots 1 to 10
-            let midLeftSpots = parkingSpots.filter{ ($0.0 <= 19 && $0.0 > 10) }   //spots 11 to 19
-            let midRightSpots = parkingSpots.filter{ ($0.0 <= 28 && $0.0 > 19) }   //spots 20 to 28
+            let leftSpots = parkingSpots.filter{ $0.0 <= 10 }                       //spots 1 to 10
+            let midLeftSpots = parkingSpots.filter{ ($0.0 <= 19 && $0.0 > 10) }     //spots 11 to 19
+            let midRightSpots = parkingSpots.filter{ ($0.0 <= 28 && $0.0 > 19) }    //spots 20 to 28
             let rightSpots = parkingSpots.filter{ ($0.0 <= 38 && $0.0 > 28) }       //spots 29 to 38
+            
+            //------------------------------Left side----------------------------------
             ParkingColumn(spots: leftSpots, parkSpotHeight: parkSpotHeight, border: [.bottom])
-//            Spacer()
-//            VStack(alignment: .center) {
-//                Rectangle()
-//                    .frame(width: 100)
-//            }
-//            Spacer()
-            VStack {                        //middle parkinglot
-                Rectangle()                 //free space for cars to travel through
+            
+            //-------------------------------Legend------------------------------------
+            Spacer()
+            
+            Legend()
+            
+            Spacer()
+            
+            //---------------------------------Middle-------------------------------------
+            VStack {
+                Rectangle()                         //Space for traveling cars (no parking)
                     .foregroundColor(Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1)))
                     .zIndex(-1)
-                HStack(spacing: 0) {        //middle (left lot)
+                    .frame(width: CGFloat(parkSpotHeight) * 2.2)
+                HStack(spacing: 0) {
                     ParkingColumn(spots: midLeftSpots, parkSpotHeight: parkSpotHeight, border: [.bottom, .trailing], topBorder: true)
                     ParkingColumn(spots: midRightSpots, parkSpotHeight: parkSpotHeight, border: [.bottom], topBorder: true)
                 }
             }
+            
+            //-----------------------------Invisible container---------------------------------
+            Spacer()
+            VStack() {                    //help aligns and make things symmetric
+                Rectangle().foregroundColor(Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1)))
+            }
+            Spacer()
+            
+            //-------------------------------Right side ------------------------------------
             ParkingColumn(spots: rightSpots, parkSpotHeight: parkSpotHeight, border: [.bottom])
         }
     }

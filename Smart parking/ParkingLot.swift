@@ -7,11 +7,20 @@
 
 import SwiftUI
 
+//--------------------Global variables for Colors ------------------------
+class GlobalColor {
+    var parkNotTaken: Color = Color(#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 0.3800349181))
+    var parkTaken: Color = Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+    var parkNotActive: Color = Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1))
+    var dirtColor: Color = Color(#colorLiteral(red: 0.5921568627, green: 0.4705882353, blue: 0.2431372549, alpha: 1))
+    var parkingColor: Color = Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1))
+    var parkingLineColor: Color = Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+    var parkingCurbColor: Color = Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1))
+}
 
-struct ParkingLayout: View {
-    let dirtColor: Color = Color(#colorLiteral(red: 0.5921568627, green: 0.4705882353, blue: 0.2431372549, alpha: 1))
-    let parkingColor: Color = Color(#colorLiteral(red: 0.4470588235, green: 0.4235294118, blue: 0.3294117647, alpha: 1))
-    let sideCornerWidth = 7
+struct ParkingLot: View {
+    var globalColor = GlobalColor()
+    let sideCurbWidth = 8
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -19,64 +28,85 @@ struct ParkingLayout: View {
                 let parkSizeHeight = CGFloat(geometry.size.height)
                 HStack(spacing: 0){
                     HStack(spacing: 0){
+                        VStack {
+                            EmptyView()
+                            Spacer()
                             Text("Side Walk")               //not dynamic enough
-                            .frame(width: parkSizeWidth * 0.07, height: parkSizeHeight)
-                            .lineLimit(2)
-                                .background(Rectangle().foregroundColor(Color(#colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.7725490196, alpha: 1))))
+                                .lineLimit(2)
+                                .foregroundColor(.black)
+                                .font(.subheadline)
+                            Spacer()
+                            Setting()
+                            //need to add notification for each parking lot
+                            
+                            
+                            //Side Menu
+                            //share button
+                            //getting users input (emailing)
+                            
+                            
+                            
+                        }
+                        .background(Color(#colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.7725490196, alpha: 1)))
+                        .frame(width: parkSizeWidth * 0.07)
                         Rectangle()
-                            .border(width: CGFloat(sideCornerWidth), edges: [.trailing], color: .white)
+                            .fill(globalColor.dirtColor)
+                            .border(width: CGFloat(sideCurbWidth), edges: [.trailing], color: globalColor.parkingCurbColor)
                     }
                     .frame(width: parkSizeWidth * 0.13)
-                    .foregroundColor(dirtColor)
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Rectangle()
-                                .foregroundColor(dirtColor)
+                                .foregroundColor(globalColor.dirtColor)
                                 .frame(width: parkSizeWidth*0.13)
                                 .cornerRadius(50, corners: [.topRight, .bottomRight])
-                                .offset(x: CGFloat(sideCornerWidth) * -1)
+                                .offset(x: CGFloat(sideCurbWidth) * -1)
                             Spacer()
                             Capsule()
-                                .foregroundColor(dirtColor)
+                                .foregroundColor(globalColor.dirtColor)
                                 .frame(width: parkSizeWidth*0.25)
                             Spacer()
                             Rectangle()
-                                .foregroundColor(dirtColor)
+                                .foregroundColor(globalColor.dirtColor)
                                 .frame(width: parkSizeWidth*0.13)
                                 .cornerRadius(50, corners: [.topLeft, .bottomLeft])
-                                .offset(x: CGFloat(sideCornerWidth))
+                                .offset(x: CGFloat(sideCurbWidth))
                         }
                         .frame(height: parkSizeHeight * 0.10)
-                        .background(parkingColor)
+                        .background(globalColor.parkingColor)
                         HStack {
-                            ParkingLot(height: Double(parkSizeHeight * 0.9))
+                            ParkingLayout(height: Double(parkSizeHeight * 0.9))
                         }
                         .frame(height: parkSizeHeight * 0.9)
-                        .background(parkingColor)
+                        .background(globalColor.parkingColor)
                     }
-                    .background(parkingColor)
+                    .background(globalColor.parkingColor)
                     .frame(width: parkSizeWidth * 0.8)
                     .zIndex(1)
                     HStack {
                         Rectangle()
                             .frame(width: parkSizeWidth * 0.07)
-                            .foregroundColor(dirtColor)
-                            .border(width: CGFloat(sideCornerWidth), edges: [.leading], color: .white)
+                            .foregroundColor(globalColor.dirtColor)
+                            .border(width: CGFloat(sideCurbWidth), edges: [.leading], color: globalColor.parkingCurbColor)
                     }
                 }
                 .frame(width: parkSizeWidth, height: parkSizeHeight)
             }
             .ignoresSafeArea()
-            .background(dirtColor)
         }
     }
 }
+
+
 extension View {
     func border(width: CGFloat, edges: [Edge], color: Color) -> some View {
         overlay(EdgeBorder(width: width, edges: edges).foregroundColor(color))
     }
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+    func landscape() -> some View {
+        self.modifier(LandscapeModifier())
     }
 }
 struct EdgeBorder: Shape {
@@ -139,14 +169,10 @@ struct LandscapeModifier: ViewModifier {
             .environment(\.verticalSizeClass, .compact)
     }
 }
-extension View {
-    func landscape() -> some View {
-        self.modifier(LandscapeModifier())
-    }
-}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ParkingLayout()
+        ParkingLot()
             .previewDevice("iPhone 11 Pro")
             .previewDisplayName("iPhone 12 Pro")
             .landscape()
