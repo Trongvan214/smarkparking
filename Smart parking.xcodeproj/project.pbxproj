@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95DC27AF274ADEEC00D7A459 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 95DC27AE274ADEEC00D7A459 /* PythonKit */; };
 		EF383E8D2738A39A00C0688E /* ParkingColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF383E8C2738A39A00C0688E /* ParkingColumn.swift */; };
 		EF7B3BAF27374BD700AFB90B /* ParkingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BAE27374BD700AFB90B /* ParkingLayout.swift */; };
 		EF7B3BB227374D1300AFB90B /* ParkingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B3BB127374D1300AFB90B /* ParkingSpot.swift */; };
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95DC27AF274ADEEC00D7A459 /* PythonKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +102,9 @@
 			dependencies = (
 			);
 			name = "Smart parking";
+			packageProductDependencies = (
+				95DC27AE274ADEEC00D7A459 /* PythonKit */,
+			);
 			productName = "Smart parking";
 			productReference = EF9CEF31271F8A9C00A40BAA /* Smart parking.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +132,9 @@
 				Base,
 			);
 			mainGroup = EF9CEF28271F8A9C00A40BAA;
+			packageReferences = (
+				95DC27AD274ADEEC00D7A459 /* XCRemoteSwiftPackageReference "PythonKit" */,
+			);
 			productRefGroup = EF9CEF32271F8A9C00A40BAA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -348,6 +356,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		95DC27AD274ADEEC00D7A459 /* XCRemoteSwiftPackageReference "PythonKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pvieito/PythonKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		95DC27AE274ADEEC00D7A459 /* PythonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95DC27AD274ADEEC00D7A459 /* XCRemoteSwiftPackageReference "PythonKit" */;
+			productName = PythonKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EF9CEF29271F8A9C00A40BAA /* Project object */;
 }
