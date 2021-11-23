@@ -7,48 +7,76 @@
 
 import SwiftUI
 
+//func sendRequest(_ completion: @escaping (String) -> ()) {
+//    guard let url = URL(string: "http://10.50.208.17:9090/api/plugins/telemetry/DEVICE/1211cf00-3350-11ec-b020-4fe1b95b4375/values/timeseries?useStrictDataTypes=false") else
+//    {
+//        return
+//    }
+//
+//    var request = URLRequest(url: url)
+//    request.httpMethod = "GET"
+//    request.addValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6NDc3dzQ3NUB3aWNoaXRhLmVkdSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiZGU2NjczNzAtMzM0Yy0xMWVjLWIwMjAtNGZlMWI5NWI0Mzc1IiwiZmlyc3ROYW1lIjoiUGhvbmciLCJsYXN0TmFtZSI6IlZvIiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6ImI4NGZlNDEwLTMzNGItMTFlYy1iMDIwLTRmZTFiOTViNDM3NSIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTYzNzU0ODE4NSwiZXhwIjoxNjM3NTU3MTg1fQ.3IVAAWFR5J_0LvFDriOcFN5bj-U15DAvtjmKbUGr1K2QX_UJiiT8mqtP_zOv6H_iXYr2yOrNaioOWxrBUoq5Hg", forHTTPHeaderField: "X-Authorization")
+//    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//    URLSession.shared.dataTask(with: request) { (data, response, error) in
+//        guard error == nil else { print(error!.localizedDescription); return }
+//        guard let data = data else { print("Empty data"); return }
+//
+//        if let str = String(data: data, encoding: .utf8) {
+//            completion(str)
+//        }
+//    }.resume()
+//}
+
+func convertStringToDictionary(text: String) -> [String:AnyObject]? {
+    if let data = text.data(using: .utf8) {
+     do {
+        let myJson = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject]?
+         return myJson
+         
+    } catch let error {
+           print(error)
+    }
+   }
+    return nil
+}
+
+func gatherParkingLots() -> [Int: [String: Bool]] {
+    var parkingSpots: [Int: [String: Bool]] = [
+        1: ["nsx-arduino": true],
+        2: ["mr2-arduino": true],
+        3: ["supra-arduino": true]
+    ]
+    
+    let url = URL(string: "http://10.50.208.17:9090/api/plugins/telemetry/DEVICE/1211cf00-3350-11ec-b020-4fe1b95b4375/values/timeseries?useStrictDataTypes=false")
+    
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.addValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6NDc3dzQ3NUB3aWNoaXRhLmVkdSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiZGU2NjczNzAtMzM0Yy0xMWVjLWIwMjAtNGZlMWI5NWI0Mzc1IiwiZmlyc3ROYW1lIjoiUGhvbmciLCJsYXN0TmFtZSI6IlZvIiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6ImI4NGZlNDEwLTMzNGItMTFlYy1iMDIwLTRmZTFiOTViNDM3NSIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTYzNzYzMzI2OSwiZXhwIjoxNjM3NjQyMjY5fQ.3eK7f2pLf6oRDqfpeSxfQhOEDmy4RVnNhezc3Wrw_CutVt26xwGZPswgiJhtinyIxu4aFbjCgH2JsLqUZjq67Q", forHTTPHeaderField: "X-Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else { print(error!.localizedDescription); return }
+            guard let data = data else { print("Empty data"); return }
+    
+            if let str = String(data: data, encoding: .utf8) {
+                let jsonDict = convertStringToDictionary(text: str)
+                print(jsonDict!["data_payload"])
+                let data_payload = jsonDict!["data_payload"]
+                if ((data_payload?.contains("FALSE")) != nil) {
+                    print("nsx-arduino parking space is false")
+                }
+            }
+        }.resume()
+    
+    return parkingSpots
+}
+
 struct ParkingLayout: View {
     var globalColor = GlobalColor()
-    @State var parkingSpots: [Int: [String: Bool]] = [
-        1: ["-": false],
-        2: ["-": true],
-        3: ["-": true],
-        4: ["1b823b46-5460-4e85-ad1c-96e8d442e3e3": false],
-        5: ["-": true],
-        6: ["fae206b8-b272-4106-a2d4-a06530c7cb3a": false],
-        7: ["1e636ce8-aba3-49b3-8c7a-b5b3feb2e645": true],
-        8: ["-": true],
-        9: ["81a558c7-5f09-4b41-a34b-20e2c20305b0": true],
-        10: ["-": true],
-        11: ["81a558c7-5f09-4b41-a34b-20e2c20305b0": true],
-        12: ["667fe2d3-f959-42d4-ad32-ce0d91221172": false],
-        13: ["c0ab17b0-0c1a-40ee-9d83-a70a4e79d6a1": false],
-        14: ["6073a040-7dc2-41fa-8faf-b5a79d5fc957": false],
-        15: ["0a5b7371-7e0c-47bd-bca7-23aabddd404f": false],
-        16: ["d1b4f5be-4046-4617-8a9f-829e538028c9": false],
-        17: ["93eeb415-3a39-4833-899c-43062ee6d4b7": false],
-        18: ["-": false],
-        19: ["095e3a89-c450-4957-84e5-47673c7899ff": false],
-        20: ["b38d7147-c068-49a6-91c4-41bfd6b1d6ab": false],
-        21: ["88d2a54f-0abe-42a1-93bf-d5fecdd594ef": false],
-        22: ["d1789e83-b890-48b8-a2ca-1be42b93bfe8": false],
-        23: ["934a5419-1e86-4535-91d0-c7f0de452e1a": false],
-        24: ["21a58205-6485-4d2b-832b-93c7674d8946": false],
-        25: ["b921c4e2-ac16-4ff7-8fa0-5080b869b0bc": false],
-        26: ["1738b8b6-375e-40aa-bbac-a4727f031caa": false],
-        27: ["08fa9c48-1d1d-4c5c-9796-8f03ba8b3fcc": false],
-        28: ["08fa9c48-1d1d-4c5c-9796-8f03ba8b3fcc": false],
-        29: ["08fa9c48-1d1d-4c5c-9796-8f03ba8b3fcc": false],
-        30: ["d1b4f5be-4046-4617-8a9f-829e538028c9": false],
-        31: ["08fa9c48-1d1d-4c5c-9796-8f03ba8b3fcc": false],
-        32: ["-": false],
-        33: ["-": false],
-        34: ["-": false],
-        35: ["-": false],
-        36: ["-": false],
-        37: ["-": false],
-        38: ["-": false]
-    ]
+    
+    var parkingSpots: [Int: [String: Bool]] = gatherParkingLots()
+    
     let parkSpotHeight: Double
     let height: Double
     let bottomPadding: Double = 10
