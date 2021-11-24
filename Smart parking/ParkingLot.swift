@@ -59,7 +59,7 @@ struct ParkingLot: View {
                             Rectangle()
                                 .foregroundColor(globalColor.dirtColor)
                                 .frame(width: parkSizeWidth*0.13)
-                                .cornerRadius(50, corners: [.topRight, .bottomRight])
+                                .cornerRadius(12, corners: [.topRight, .bottomRight])
                                 .offset(x: CGFloat(sideCurbWidth) * -1)
                             Spacer()
                             Capsule()

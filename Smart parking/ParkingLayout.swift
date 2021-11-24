@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-struct ParkingLayout: View {
-    var globalColor = GlobalColor()
-    @State var parkingSpots: [Int: [String: Bool]] = [
-        1: ["-": false],
-        2: ["-": true],
-        3: ["-": true],
+class ParkingData {
+    @Published var parkingSpots: [Int: [String: Bool]] = [
+        1: ["nsx-arduino": true],
+        2: ["mr2-arduino": true],
+        3: ["supra-arduino": true],
         4: ["1b823b46-5460-4e85-ad1c-96e8d442e3e3": false],
         5: ["-": true],
         6: ["fae206b8-b272-4106-a2d4-a06530c7cb3a": false],
@@ -49,12 +48,33 @@ struct ParkingLayout: View {
         37: ["-": false],
         38: ["-": false]
     ]
+    func update(id: String, value: Bool){
+        for key in parkingSpots.keys {
+            let parkingId = self.parkingSpots[key]!.keys
+            if(parkingId.contains(id)){
+                self.parkingSpots[key]!.updateValue(value, forKey: id)
+            }
+        }
+    }
+    
+}
+
+struct Parking: Codable, Hashable {
+    var ts: String
+    var value: String
+}
+
+struct ParkingLayout: View {
+    var globalColor = GlobalColor()
+    let network = Network()
+    @State var parkingSpots = ParkingData().parkingSpots
     let parkSpotHeight: Double
     let height: Double
     let bottomPadding: Double = 10
     init(height: Double){
         self.height = height
         self.parkSpotHeight = (height-bottomPadding) / 10
+        network.getParkingLots()
     }
     var body: some View {
         HStack {
