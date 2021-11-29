@@ -65,16 +65,16 @@ struct Parking: Codable, Hashable {
 }
 
 struct ParkingLayout: View {
+    @State var parkingSpots = ParkingData().parkingSpots
     var globalColor = GlobalColor()
     let network = Network()
-    @State var parkingSpots = ParkingData().parkingSpots
     let parkSpotHeight: Double
     let height: Double
     let bottomPadding: Double = 10
     init(height: Double){
         self.height = height
         self.parkSpotHeight = (height-bottomPadding) / 10
-        network.getParkingLots()
+        network.getParkingLots()            //testing
     }
     var body: some View {
         HStack {
