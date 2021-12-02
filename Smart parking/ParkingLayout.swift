@@ -70,6 +70,10 @@ struct ParkingLayout: View {
     let parkSpotHeight: Double
     let height: Double
     let bottomPadding: Double = 10
+    
+    //Timer
+    let timer = Timer.publish(every: 10.0, on: .main, in: .common).autoconnect()
+
     init(height: Double){
         self.height = height
         self.parkSpotHeight = (height-bottomPadding) / 10
@@ -111,7 +115,8 @@ struct ParkingLayout: View {
             
             //-------------------------------Right side ------------------------------------
             ParkingColumn(spots: rightSpots, parkSpotHeight: parkSpotHeight, border: [.bottom])
-        }.onAppear(){
+        }
+        .onAppear(){
             Network().getParkingLots { (NodeData) in
                 print(NodeData)
                 let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
@@ -119,6 +124,14 @@ struct ParkingLayout: View {
                 print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
             }
         }
+        .onReceive(timer, perform: { _ in
+            Network().getParkingLots { (NodeData) in
+                print(NodeData)
+                let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
+                self.parkingSpots.update(id: "nsx-arduino", value: value)
+                print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
+            }
+        })
     }
 }
 
