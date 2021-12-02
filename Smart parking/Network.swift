@@ -8,10 +8,9 @@
 import Foundation
 
 class Network {
-    var parkingData = ParkingData()
     
     //    //look into fetchable in swift
-    func getParkingLots() -> Void {
+    func getParkingLots(completion: @escaping (NodeData) -> ()){
         
         // URL
         let url = URL(string: "http://10.50.208.17:9090/api/plugins/telemetry/DEVICE/1211cf00-3350-11ec-b020-4fe1b95b4375/values/timeseries?useStrictDataTypes=false")
@@ -23,9 +22,10 @@ class Network {
         var request = URLRequest(url: url!)
         
         //header for the api call
+        // just need a new JWT each time 
         let header = [
             "Content-Type": "application/json",
-            "X-Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6NDc3dzQ3NUB3aWNoaXRhLmVkdSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiZGU2NjczNzAtMzM0Yy0xMWVjLWIwMjAtNGZlMWI5NWI0Mzc1IiwiZmlyc3ROYW1lIjoiUGhvbmciLCJsYXN0TmFtZSI6IlZvIiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6ImI4NGZlNDEwLTMzNGItMTFlYy1iMDIwLTRmZTFiOTViNDM3NSIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTYzNzcwNjc5MywiZXhwIjoxNjM3NzE1NzkzfQ.II7ptFIBve2JzIR3uvKrQLvjvctyuBJ62R-ZBAOipLItmkeUgHmdt8Deeqe48fkNXQ_ETx3fmLR_YLIJ8X-sJQ"
+            "X-Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6NDc3dzQ3NUB3aWNoaXRhLmVkdSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiZGU2NjczNzAtMzM0Yy0xMWVjLWIwMjAtNGZlMWI5NWI0Mzc1IiwiZmlyc3ROYW1lIjoiUGhvbmciLCJsYXN0TmFtZSI6IlZvIiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6ImI4NGZlNDEwLTMzNGItMTFlYy1iMDIwLTRmZTFiOTViNDM3NSIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTYzODQwMDI1NiwiZXhwIjoxNjM4NDA5MjU2fQ.MoIMfIrFHpv41jbysHflHF7TF5iY0j272pkd_PyPhyQCNZeVsNohNubbZYi_WKNDESYDB0cs8leYHLNlbFqdRQ"
         ]
         //set header
         request.allHTTPHeaderFields = header
@@ -43,13 +43,10 @@ class Network {
             guard let data = data else { print("Empty data"); return }
             let decoder = JSONDecoder()
             do {
-                print("Before: \(self.parkingData.parkingSpots[1]!)")       //testing
                 let endNode = try decoder.decode(NodeData.self, from: data)
                 DispatchQueue.main.async {
-                    let value: Bool = endNode.data_payload[0].value.contains("TRUE")
-                    self.parkingData.update(id: "nsx-arduino", value: value)
+                    completion(endNode)
                 }
-                print("After: \(self.parkingData.parkingSpots[1]!)")        //testing
             }
             //error handling
             catch DecodingError.keyNotFound(let key, let context) {
