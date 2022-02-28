@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ParkingData {
+class ParkingData: ObservableObject {
     @Published var parkingSpots: [Int: [String: Bool]] = [
         1: ["nsx-arduino": true],
         2: ["mr2-arduino": true],
@@ -65,24 +65,25 @@ struct Parking: Codable, Hashable {
 }
 
 struct ParkingLayout: View {
+    @StateObject var parkingSpots = ParkingData()
     var globalColor = GlobalColor()
-    let network = Network()
-    @State var parkingSpots = ParkingData().parkingSpots
     let parkSpotHeight: Double
     let height: Double
     let bottomPadding: Double = 10
+    
+    //Timer
+    let timer = Timer.publish(every: 10.0, on: .main, in: .common).autoconnect()
+
     init(height: Double){
         self.height = height
         self.parkSpotHeight = (height-bottomPadding) / 10
-        network.getParkingLots()
     }
     var body: some View {
         HStack {
-            let leftSpots = parkingSpots.filter{ $0.0 <= 10 }                       //spots 1 to 10
-            let midLeftSpots = parkingSpots.filter{ ($0.0 <= 19 && $0.0 > 10) }     //spots 11 to 19
-            let midRightSpots = parkingSpots.filter{ ($0.0 <= 28 && $0.0 > 19) }    //spots 20 to 28
-            let rightSpots = parkingSpots.filter{ ($0.0 <= 38 && $0.0 > 28) }       //spots 29 to 38
-            
+            let leftSpots = parkingSpots.parkingSpots.filter{ $0.0 <= 10 }                       //spots 1 to 10
+            let midLeftSpots = parkingSpots.parkingSpots.filter{ ($0.0 <= 19 && $0.0 > 10) }     //spots 11 to 19
+            let midRightSpots = parkingSpots.parkingSpots.filter{ ($0.0 <= 28 && $0.0 > 19) }    //spots 20 to 28
+            let rightSpots = parkingSpots.parkingSpots.filter{ ($0.0 <= 38 && $0.0 > 28) }       //spots 29 to 38
             //------------------------------Left side----------------------------------
             ParkingColumn(spots: leftSpots, parkSpotHeight: parkSpotHeight, border: [.bottom])
             
@@ -115,6 +116,22 @@ struct ParkingLayout: View {
             //-------------------------------Right side ------------------------------------
             ParkingColumn(spots: rightSpots, parkSpotHeight: parkSpotHeight, border: [.bottom])
         }
+        .onAppear(){
+            Network().getParkingLots { (NodeData) in
+                print(NodeData)
+                let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
+                self.parkingSpots.update(id: "nsx-arduino", value: value)
+                print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
+            }
+        }
+        .onReceive(timer, perform: { _ in
+            Network().getParkingLots { (NodeData) in
+                print(NodeData)
+                let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
+                self.parkingSpots.update(id: "nsx-arduino", value: value)
+                print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
+            }
+        })
     }
 }
 

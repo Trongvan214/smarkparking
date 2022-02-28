@@ -14,6 +14,7 @@ struct Setting: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(.black)
+                
         }
         .padding()
         .zIndex(1000)
