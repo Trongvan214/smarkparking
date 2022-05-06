@@ -13,7 +13,7 @@ class Network {
     func getParkingLots(completion: @escaping (NodeData) -> ()){
         
         // URL
-        let url = URL(string: "http://10.50.208.17:9090/api/plugins/telemetry/DEVICE/1211cf00-3350-11ec-b020-4fe1b95b4375/values/timeseries?useStrictDataTypes=false")
+        let url = URL(string: "https://thingsboard.cloud:443/api/plugins/telemetry/DEVICE/e8613230-c9aa-11ec-b27f-d3ef2e0c0a7d/values/timeseries?keys=payload")
         
         //Guard against empty URL
         guard url != nil else { print("Error creating the url" ); return}
@@ -22,10 +22,10 @@ class Network {
         var request = URLRequest(url: url!)
         
         //header for the api call
-        // just need a new JWT each time 
+        // just need a new JWT each time
         let header = [
             "Content-Type": "application/json",
-            "X-Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6NDc3dzQ3NUB3aWNoaXRhLmVkdSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiZGU2NjczNzAtMzM0Yy0xMWVjLWIwMjAtNGZlMWI5NWI0Mzc1IiwiZmlyc3ROYW1lIjoiUGhvbmciLCJsYXN0TmFtZSI6IlZvIiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJ0ZW5hbnRJZCI6ImI4NGZlNDEwLTMzNGItMTFlYy1iMDIwLTRmZTFiOTViNDM3NSIsImN1c3RvbWVySWQiOiIxMzgxNDAwMC0xZGQyLTExYjItODA4MC04MDgwODA4MDgwODAiLCJpc3MiOiJ0aGluZ3Nib2FyZC5pbyIsImlhdCI6MTYzODQwMDI1NiwiZXhwIjoxNjM4NDA5MjU2fQ.MoIMfIrFHpv41jbysHflHF7TF5iY0j272pkd_PyPhyQCNZeVsNohNubbZYi_WKNDESYDB0cs8leYHLNlbFqdRQ"
+            "X-Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJEamF2ZXJ5MTdAZ21haWwuY29tIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI4NmY2MzFhMC1iM2E1LTExZWMtODhjYi1hZDgyNzg4OTZmNTIiLCJmaXJzdE5hbWUiOiJEYW1pYW4iLCJsYXN0TmFtZSI6IkF2ZXJ5IiwiZW5hYmxlZCI6dHJ1ZSwiaXNQdWJsaWMiOmZhbHNlLCJpc0JpbGxpbmdTZXJ2aWNlIjpmYWxzZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJ0ZXJtc09mVXNlQWNjZXB0ZWQiOnRydWUsInRlbmFudElkIjoiODY5M2VkNjAtYjNhNS0xMWVjLTg4Y2ItYWQ4Mjc4ODk2ZjUyIiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmNsb3VkIiwiaWF0IjoxNjUxNzk1NDkwLCJleHAiOjE2NTE4MjQyOTB9.xM9-vV5iZzfT2P4fAp6weQFB1sk0DnA_2tcpOqaByYZdu3-RDDHTzOfoeEU9KOPuC7RHAQlAay9Q3-yREnqIVA"
         ]
         //set header
         request.allHTTPHeaderFields = header
@@ -70,9 +70,9 @@ class Network {
 struct NodeData: Codable {
 //    var data_rssi: [NodeValue]
 //    var data_snr: [NodeValue]
-    var data_payload: [NodeValue]
+    var payload: [NodeValue]
 }
 struct NodeValue: Codable {
-    var ts: Int
+    //var ts: Int
     var value: String
 }

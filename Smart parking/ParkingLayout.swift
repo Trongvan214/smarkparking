@@ -9,7 +9,7 @@ import SwiftUI
 
 class ParkingData: ObservableObject {
     @Published var parkingSpots: [Int: [String: Bool]] = [
-        1: ["nsx-arduino": true],
+        1: ["400z": false],
         2: ["mr2-arduino": true],
         3: ["supra-arduino": true],
         4: ["1b823b46-5460-4e85-ad1c-96e8d442e3e3": false],
@@ -119,16 +119,16 @@ struct ParkingLayout: View {
         .onAppear(){
             Network().getParkingLots { (NodeData) in
                 print(NodeData)
-                let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
-                self.parkingSpots.update(id: "nsx-arduino", value: value)
+                let value: Bool = NodeData.payload[0].value.contains("true")
+                self.parkingSpots.update(id: "400z", value: value)
                 print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
             }
         }
         .onReceive(timer, perform: { _ in
             Network().getParkingLots { (NodeData) in
                 print(NodeData)
-                let value: Bool = NodeData.data_payload[0].value.contains("TRUE")
-                self.parkingSpots.update(id: "nsx-arduino", value: value)
+                let value: Bool = NodeData.payload[0].value.contains("true")
+                self.parkingSpots.update(id: "400z", value: value)
                 print("After: \(self.parkingSpots.parkingSpots[1]!)")        //testing
             }
         })
